@@ -16,6 +16,7 @@ const reducer = function (state, action) {
       for (let i = 0; i < 5; i++) {
         state.hand[i] = state.deck.pop();
       }
+      console.log("DRAWING FIVE");
       return {
         ...state,
       };
