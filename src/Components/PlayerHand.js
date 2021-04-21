@@ -1,22 +1,45 @@
-import React, { useEffect } from "react";
-import {rankKey, suitKey} from '../Utility/deckUtilities';
+import React from "react";
+import styled from "styled-components";
 
-const PlayerHand = ({ state, dispatch }) => {
-  useEffect(() => {
-    dispatch({ type: "SHUFFLE_DECK" });
-    dispatch({ type: "DRAW_FIVE" });
+import { cards } from "../Utility/Cards";
 
-    console.log(state.hand, "MY HAND");
-  }, []);
+const PlayerHand = ({ state, dispatch, drawCards, deckCount }) => {
+  function handleDraw() {
+    drawCards([0, 1, 2, 3, 4]);
+  }
 
-  return <>
+  const cardPix = () => {
+    const picBox = [];
+    for (let i = 0; i < 5; i++) {
+      picBox.push(
+        <img
+          src={state.keep[i] ? cards[state.hand[i]?.idx] : cards["back"]}
+          alt="playing card"
+          onClick={() => {
+            dispatch({ type: "TOGGLE_KEEP", i });
+          }}
+        />
+      );
+    }
+    return picBox;
+  };
 
-  {state.hand.map((card)=>
-  <h2>{`${rankKey[card[0]]} of ${suitKey[card[1]]}`}</h2>
-
-  )}
-
-  </>;
+  return (
+    <>
+      <button onClick={() => handleDraw()}>DRAW</button>
+      <PokerHandDiv>{cardPix()}</PokerHandDiv>
+      <h2>{`${deckCount} Cards Remain!`}</h2>
+    </>
+  );
 };
 
 export default PlayerHand;
+
+const PokerHandDiv = styled.div`
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-around;
+  img {
+    max-width: 200px;
+  }
+`;

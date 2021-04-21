@@ -1,6 +1,6 @@
-import React, { useReducer } from "react";
+import React, {useReducer} from "react";
 import reducer, { init } from "./Utility/reducer";
-import PlayerHand from "./Components/PlayerHand";
+import Deck from "./Components/Deck";
 import "./App.css";
 
 function App() {
@@ -9,7 +9,8 @@ function App() {
   return (
     <>
       <h1>Poker Game</h1>
-      <PlayerHand state={state} dispatch={dispatch} />
+
+      <Deck state={state} dispatch={dispatch} />
     </>
   );
 }

@@ -1,24 +1,38 @@
-import { shuffledDeck } from "./deckUtilities";
+const allKept = {
+  0: true,
+  1: true,
+  2: true,
+  3: true,
+  4: true,
+};
+const emptyHand = {
+  0: { idx: "back" },
+  1: { idx: "back" },
+  2: { idx: "back" },
+  3: { idx: "back" },
+  4: { idx: "back" },
+};
 
 export const init = {
-  deck: [...shuffledDeck()],
-  hand: [],
+  keep: {
+    ...allKept,
+  },
+  hand: {
+    ...emptyHand,
+  },
 };
 
 const reducer = function (state, action) {
   switch (action.type) {
-    case "SHUFFLE_DECK":
+    case "UPDATE_HAND":
       return {
         ...state,
-        deck: [...shuffledDeck()],
+        hand: action.newHand,
       };
-    case "DRAW_FIVE":
-      for (let i = 0; i < 5; i++) {
-        state.hand[i] = state.deck.pop();
-      }
-      console.log("DRAWING FIVE");
+    case "TOGGLE_KEEP":
       return {
         ...state,
+        keep: { ...state.keep, [action.i]: !state.keep[action.i] },
       };
   }
 };

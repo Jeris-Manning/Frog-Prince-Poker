@@ -1,17 +1,30 @@
 export const freshDeck = () => {
-  const deck = new Array(52);
+  const deck = [];
   const suits = ["c", "d", "h", "s"];
+  const ranks = [
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "J",
+    "Q",
+    "K",
+    "A",
+  ];
 
-  let rank = 2;
-  let suit = 0;
-
-  for (let i = 0; i < 52; i++) {
-    deck[i] = [rank, suits[suit]];
-    if (rank === 14) {
-      rank = 1;
-      suit++;
+  for (let i = 0; i < 13; i++) {
+    for (let j = 0; j < 4; j++) {
+      deck.push({
+        suit: suits[j],
+        rank: ranks[i],
+        idx: `${suits[j]}${ranks[i]}`,
+      });
     }
-    rank++;
   }
 
   return deck;
@@ -28,27 +41,4 @@ export const shuffledDeck = () => {
   }
 
   return startingDeck;
-};
-
-export const rankKey = {
-  2: 2,
-  3: 3,
-  4: 4,
-  5: 5,
-  6: 6,
-  7: 7,
-  8: 8,
-  9: 9,
-  10: 10,
-  11: "Jack",
-  12: "Queen",
-  13: "King",
-  14: "Ace",
-};
-
-export const suitKey = {
-  c: "Clubs",
-  d: "Diamonds",
-  h: "Hearts",
-  s: "Spades",
 };
