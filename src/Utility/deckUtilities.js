@@ -1,3 +1,16 @@
+export const shuffleDeck = (dirtyDeck) => {
+  let deck = dirtyDeck;
+
+  for (let k = deck.length - 1; k > 0; k--) {
+    const j = Math.floor(Math.random() * k);
+    const tempCard = deck[k];
+    deck[k] = deck[j];
+    deck[j] = tempCard;
+  }
+
+  return deck;
+};
+
 export const freshDeck = () => {
   const deck = [];
   const suits = ["c", "d", "h", "s"];
@@ -27,18 +40,7 @@ export const freshDeck = () => {
     }
   }
 
-  return deck;
-};
+  let freshDeck = shuffleDeck(deck);
 
-export const shuffledDeck = () => {
-  let startingDeck = freshDeck();
-
-  for (let k = startingDeck.length - 1; k > 0; k--) {
-    const j = Math.floor(Math.random() * k);
-    const tempCard = startingDeck[k];
-    startingDeck[k] = startingDeck[j];
-    startingDeck[j] = tempCard;
-  }
-
-  return startingDeck;
+  return freshDeck;
 };

@@ -1,18 +1,19 @@
-import React, {useReducer} from "react";
-import reducer, { init } from "./Utility/reducer";
-import Deck from "./Components/Deck";
+import React from "react";
+import GameController from "./Components/GameController";
+import styled from "styled-components";
 import "./App.css";
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, init);
-
   return (
     <>
-      <h1>Poker Game</h1>
-
-      <Deck state={state} dispatch={dispatch} />
+      <GameHeader>Poker Game</GameHeader>
+      <GameController />
     </>
   );
 }
 
 export default App;
+
+const GameHeader = styled.h1`
+  text-align: center;
+`;
