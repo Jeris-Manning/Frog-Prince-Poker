@@ -1,41 +1,52 @@
 import React from "react";
 import styled from "styled-components";
+import { Cards } from "../Utility/Cards";
+import HandEvaluation from "./HandEvaluation";
+import HoldCard from "./HoldCard";
+import DrawCards from "./DrawCards";
+import DealCards from "./DealCards";
 
-import { cards } from "../Utility/Cards";
+const PlayerHand = ({
+  phase,
+  setPhase,
+  hand,
+  setHand,
+  deck,
+  setDeck,
+  handRank,
+  setHandRank,
+}) => {
+  const handleDeal = () => {
+    let dealer = DealCards();
+    setHand(dealer.dealerHand);
+    setDeck(dealer.dealerDeck);
+    setPhase(2);
+  };
 
-const PlayerHand = ({ state, drawCards, hand, setHand, phase, setPhase }) => {
-  function holdCard(slot) {
-    let tempHand = [...hand];
-    tempHand[slot]["held"] = !tempHand[slot]?.held;
-    setHand([...tempHand]);
-  }
-
-  function handleDraw() {
-    let drawArray = [];
-    for (let i = 0; i < 5; i++) {
-      if (hand[i].held === false) {
-        drawArray.push(i);
-      }
-    }
-    drawCards(drawArray);
-  }
+  const handleDraw = (hand, deck) => {
+    let afterDraw = DrawCards(hand, deck);
+    setHand([...afterDraw][0]);
+    setPhase(3);
+    setHandRank(HandEvaluation(afterDraw[0]));
+  };
 
   const cardPix = () => {
     const picBox = [];
     for (let i = 0; i < 5; i++) {
       picBox.push(
-        <CardDiv>
-          <div className={hand[i].held === true ? "heldMark" : "scram"}>
+        <CardDiv key={i}>
+          <div className={hand[i]?.held === true ? "heldMark" : "scram"}>
             HELD
           </div>
           <img
-            src={hand[i].idx === "blank" ? cards["back"] : cards[hand[i]?.idx]}
+            src={hand[i]?.idx === "blank" ? Cards["back"] : Cards[hand[i]?.idx]}
             alt="playing card"
           />
           <button
-            className={phase === "newGame" ? "scram" : ""}
+            className={phase === 2 ? "" : "scram"}
             onClick={() => {
-              holdCard(i);
+              let drawnHand = HoldCard(hand, i);
+              setHand(drawnHand);
             }}>
             {hand[i]?.held ? "Discard" : "Hold"}
           </button>
@@ -48,7 +59,13 @@ const PlayerHand = ({ state, drawCards, hand, setHand, phase, setPhase }) => {
   return (
     <DisplayDiv>
       <PokerHandDiv>{cardPix()}</PokerHandDiv>
-      <button onClick={() => handleDraw()}>DRAW</button>
+
+      {phase === 2 ? (
+        <button onClick={() => handleDraw(hand, deck)}>DRAW</button>
+      ) : (
+        <button onClick={() => handleDeal()}>DEAL</button>
+      )}
+      {handRank === "" ? null : <h1>{"You have " + handRank}</h1>}
     </DisplayDiv>
   );
 };
@@ -61,7 +78,7 @@ const DisplayDiv = styled.div`
   align-items: center;
   button {
     width: 150px;
-    margin-top: 30px;
+    margin: 30px 0;
   }
 `;
 
