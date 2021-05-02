@@ -17,6 +17,7 @@ const PlayerHand = ({
   setHandRank,
 }) => {
   const handleDeal = () => {
+    setHandRank("");
     let dealer = DealCards();
     setHand(dealer.dealerHand);
     setDeck(dealer.dealerDeck);
