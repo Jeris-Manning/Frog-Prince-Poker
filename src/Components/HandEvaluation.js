@@ -12,51 +12,63 @@ const HandEvaluation = (hand) => {
     suits.push(card.suit);
   });
 
-  ranks = ranks.sort((a, b) => a - b);
+  let sortedRanks = [...ranks.sort((a, b) => a - b)];
+
+  if (new Set(sortedRanks).size <= 1) {
+    return "";
+  }
 
   if (new Set(suits).size === 1) {
-    if (ranks[0] === 10) {
+    if (sortedRanks[0] === 10) {
       return "a Royal Flush";
     }
-    if (ranks[4] - ranks[0] === 4 || (ranks[3] === 4 && ranks[4] === 14)) {
+    if (
+      sortedRanks[4] - sortedRanks[0] === 4 ||
+      (sortedRanks[3] === 4 && sortedRanks[4] === 14)
+    ) {
       return "a Straight Flush";
     } else {
       return "a Flush";
     }
   } else {
-    if (new Set(ranks).size === 2) {
-      if (ranks[0] !== ranks[1]) {
-        return ranks[1] > 10
-          ? `Four of a Kind - ${cardList[ranks[1]]}`
-          : `Four of a Kind - ${[ranks[1]]}s`;
+    if (new Set(sortedRanks).size === 2) {
+      if (sortedRanks[0] !== sortedRanks[1]) {
+        return sortedRanks[1] > 10
+          ? `Four of a Kind - ${cardList[sortedRanks[1]]}`
+          : `Four of a Kind - ${[sortedRanks[1]]}s`;
       }
-      if (ranks[3] !== ranks[4]) {
-        return ranks[3] > 10
-          ? `Four of a Kind - ${cardList[ranks[3]]}`
-          : `Four of a Kind - ${[ranks[3]]}s`;
+      if (sortedRanks[3] !== sortedRanks[4]) {
+        return sortedRanks[3] > 10
+          ? `Four of a Kind - ${cardList[sortedRanks[3]]}`
+          : `Four of a Kind - ${[sortedRanks[3]]}s`;
       } else {
         return "a Full House";
       }
     }
   }
 
-  if (new Set(ranks).size === 5) {
-    if (ranks[4] - ranks[0] === 4 || (ranks[3] === 4 && ranks[4] === 14)) {
+  if (new Set(sortedRanks).size === 5) {
+    if (
+      sortedRanks[4] - sortedRanks[0] === 4 ||
+      (sortedRanks[3] === 4 && sortedRanks[4] === 14)
+    ) {
       return "a Straight";
     }
   }
 
-  if (new Set(ranks).size === 3) {
-    return ranks[0] === ranks[2] || ranks[2] === ranks[4]
-      ? ranks[2] > 10
-        ? `Three of a Kind - ${cardList[ranks[2]]}`
-        : `Three of a Kind - ${[ranks[2]]}s`
+  if (new Set(sortedRanks).size === 3) {
+    return sortedRanks[0] === sortedRanks[2] ||
+      sortedRanks[2] === sortedRanks[4]
+      ? "Three of a Kind"
       : "Two Pair";
   }
 
   for (let i = 0; i < 4; i++) {
-    if (ranks[i] === ranks[i + 1] && ranks[i] + ranks[i + 1] >= 22) {
-      return `a Pair of ${cardList[ranks[i]]}`;
+    if (
+      sortedRanks[i] === sortedRanks[i + 1] &&
+      sortedRanks[i] + sortedRanks[i + 1] >= 22
+    ) {
+      return `a Pair of ${cardList[sortedRanks[i]]}`;
     }
   }
 

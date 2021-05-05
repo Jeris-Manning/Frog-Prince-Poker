@@ -1,10 +1,16 @@
-const DrawCards = (hand, deck) => {
-  let currentDeck = [...deck];
-  let currentHand = [...hand];
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import HandDisplay from "./HandDisplay";
+import HandEvaluation from "./HandEvaluation";
+
+const DrawCards = ({ state, dispatch }) => {
+  let currentDeck = [...state.deck];
+  let currentHand = [...state.hand];
+  const [finalHand, setFinalHand] = useState("");
   let indices = [];
   let popper = {};
   for (let i = 0; i < 5; i++) {
-    if (currentHand[i]?.held === false) {
+    if (state.held[i] === false) {
       indices.push(i);
     }
   }
@@ -13,8 +19,27 @@ const DrawCards = (hand, deck) => {
     popper = currentDeck.pop();
     currentHand[indices[i]] = { ...popper, held: false };
   }
-  let drawReturn = [currentHand, true];
-  return drawReturn;
+
+  useEffect(() => {
+    if (state.phase === 2) {
+      dispatch({
+        type: "DRAW_HAND",
+        payload: { hand: currentHand, deck: currentDeck },
+      });
+      setFinalHand('You have ' + HandEvaluation(currentHand));
+    }
+  }, [state.phase]);
+
+  return (
+    <>
+      <HandDisplay state={state} dispatch={dispatch} />
+      <FinalHand>{finalHand}</FinalHand>
+    </>
+  );
 };
 
 export default DrawCards;
+
+const FinalHand = styled.h1`
+  text-align: center;
+`;

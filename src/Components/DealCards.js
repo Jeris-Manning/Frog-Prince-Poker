@@ -1,4 +1,7 @@
-const DealCards = () => {
+import React, { useEffect } from "react";
+import HandDisplay from "./HandDisplay";
+
+const DealCards = ({ state, dispatch}) => {
   const freshDeck = () => {
     const freshDeck = [];
     const suits = ["c", "d", "h", "s"];
@@ -52,10 +55,26 @@ const DealCards = () => {
     return [dealtHand, readyDeck];
   };
 
-  let gameDeck = shuffleDeck(freshDeck());
-  let gameHand = dealHand(gameDeck);
+  let mixedDeck = shuffleDeck(freshDeck());
+  let postDeal = dealHand(mixedDeck);
 
-  return { dealerDeck: gameHand[1], dealerHand: gameHand[0] };
+  let afterDeal = { hand: postDeal[0], deck: postDeal[1] };
+
+  useEffect(() => {
+    if (state.phase === 1) {
+      dispatch({ type: "DEAL_HAND", afterDeal });
+    }
+  }, [state.phase]);
+
+  return (
+    <>
+      <HandDisplay
+        state={state}
+        dispatch={dispatch}
+
+      />
+    </>
+  );
 };
 
 export default DealCards;
