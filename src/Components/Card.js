@@ -23,6 +23,7 @@ const CardDiv = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  background-image: url(${Cards["back"]})
 
   img {
     max-width: 200px;
