@@ -2,15 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { Cards } from "../Assets/Cards";
 
-const Card = ({state, card, id }) => {
-
+const Card = ({ state, card, id }) => {
   return (
     <CardDiv>
-
       <div className={state.held[id] === true ? "heldMark" : "scram"}>HELD</div>
       <img
         src={card?.idx === "blank" ? Cards["back"] : Cards[card?.idx]}
         alt="playing card"
+        key={card?.idx}
       />
     </CardDiv>
   );
