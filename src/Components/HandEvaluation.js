@@ -1,4 +1,5 @@
 const HandEvaluation = (hand) => {
+
   let ranks = [];
   let suits = [];
   var cardList = {
@@ -13,6 +14,8 @@ const HandEvaluation = (hand) => {
   });
 
   let sortedRanks = [...ranks.sort((a, b) => a - b)];
+
+  console.log(sortedRanks, "SORTED RANKS");
 
   if (new Set(sortedRanks).size <= 1) {
     return "";
@@ -57,10 +60,12 @@ const HandEvaluation = (hand) => {
   }
 
   if (new Set(sortedRanks).size === 3) {
-    return sortedRanks[0] === sortedRanks[2] ||
-      sortedRanks[2] === sortedRanks[4]
-      ? "Three of a Kind"
-      : "Two Pair";
+    for (let i = 0; i < 3; i++) {
+      if (sortedRanks[i] === sortedRanks[i + 2]) {
+        return "Three of a Kind";
+      }
+    }
+    return "Two Pair";
   }
 
   for (let i = 0; i < 4; i++) {

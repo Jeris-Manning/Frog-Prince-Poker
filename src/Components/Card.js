@@ -6,6 +6,7 @@ const Card = ({ state, card, id }) => {
   return (
     <CardDiv>
       <div className={state.held[id] === true ? "heldMark" : "scram"}>HELD</div>
+
       <img
         src={card?.idx === "blank" ? Cards["back"] : Cards[card?.idx]}
         alt="playing card"
@@ -18,18 +19,18 @@ const Card = ({ state, card, id }) => {
 export default Card;
 
 const CardDiv = styled.div`
-  height: 320px;
+  // max-height: 320px;
+  // min-width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
 
   img {
-    max-width: 200px;
+    // margin: 0 20px;
+    width: 100%;
   }
-  button {
-    margin: 0 auto;
-  }
+
   .heldMark {
     position: absolute;
     display: flex;

@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect } from "react";
 import styled from "styled-components";
 import Reducer, { initReducer } from "./Reducer";
 import DrawCards from "./Components/DrawCards";
@@ -7,7 +7,7 @@ import "./App.css";
 
 function App() {
   const [state, dispatch] = useReducer(Reducer, initReducer);
-
+  useEffect(() => {}, []);
   return (
     <DisplayDiv>
       <h1>Jacks or Better</h1>
@@ -15,9 +15,7 @@ function App() {
       {Number(state.phase) === 1 ? (
         <DealCards state={state} dispatch={dispatch} />
       ) : (
-        <div>
-          <DrawCards state={state} dispatch={dispatch} />
-        </div>
+        <DrawCards state={state} dispatch={dispatch} />
       )}
 
       {state.phase === 1 ? (
@@ -40,12 +38,12 @@ function App() {
 export default App;
 
 const DisplayDiv = styled.div`
-padding-top: 30px;
+  padding-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  button {
-    width: 100px;
+  h1 {
+    margin-bottom: 10px;
   }
   .dealDrawBtn {
     margin-top: 50px;

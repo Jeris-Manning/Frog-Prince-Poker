@@ -21,8 +21,17 @@ const HandDisplay = ({ state, dispatch }) => {
 export default HandDisplay;
 
 const PokerHandDiv = styled.div`
-  width: 80vw;
+  width: 90%;
   max-width: 1200px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+
+  div {
+    margin: 0 5px;
+    button {
+      min-width: 75px;
+      width: 50%;
+      margin-top: 15px;
+    }
+  }
 `;

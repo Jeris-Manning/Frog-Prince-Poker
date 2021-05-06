@@ -20,9 +20,7 @@ const HoldButton = ({ state, dispatch, id }) => {
 export default HoldButton;
 
 const HoldButtonWrap = styled.div`
-display: flex;
-justifyContent: center;
-  button {
-    margin: 0 auto;
-  }
+  display: flex;
+  justify-content: center;
+  // background-color: black;
 `;
