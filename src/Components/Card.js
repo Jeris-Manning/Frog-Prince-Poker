@@ -19,15 +19,12 @@ const Card = ({ state, card, id }) => {
 export default Card;
 
 const CardDiv = styled.div`
-  // max-height: 320px;
-  // min-width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
 
   img {
-    // margin: 0 20px;
     width: 100%;
   }
 
@@ -40,9 +37,15 @@ const CardDiv = styled.div`
     font-size: 2rem;
     font-weight: 700;
     background-color: rgba(0, 140, 0, 0.9);
-    top: 260px;
     width: 120px;
     height: 40px;
     border: solid 1px black;
+    @media (max-width: 900px) {
+      font-size: 1.15rem;
+      font-weight: 700;
+      width: 60px;
+      height: 25px;
+      background-color: rgb(0, 140, 0);
+    }
   }
 `;
