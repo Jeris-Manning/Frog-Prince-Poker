@@ -15,6 +15,13 @@ const DrawCards = ({ state, dispatch }) => {
     }
   }
 
+  for (let k = currentDeck.length - 1; k > 0; k--) {
+    const j = Math.floor(Math.random() * k);
+    const tempCard = currentDeck[k];
+    currentDeck[k] = currentDeck[j];
+    currentDeck[j] = tempCard;
+  }
+
   for (let i = 0; i < indices.length; i++) {
     popper = currentDeck.pop();
     currentHand[indices[i]] = { ...popper, held: false };
@@ -26,7 +33,7 @@ const DrawCards = ({ state, dispatch }) => {
         type: "DRAW_HAND",
         payload: { hand: currentHand, deck: currentDeck },
       });
-      setFinalHand('You have ' + HandEvaluation(currentHand));
+      setFinalHand("You have " + HandEvaluation(currentHand));
     }
   }, [state.phase]);
 
