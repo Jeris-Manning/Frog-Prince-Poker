@@ -1,3 +1,5 @@
+import { jbPays } from "./Utility/payouts";
+
 const initHand = [
   { idx: "blank" },
   { idx: "blank" },
@@ -9,6 +11,12 @@ const initHand = [
 const initHold = [false, false, false, false, false];
 
 export const initReducer = {
+  loadedGame: "Jacks or Better",
+  pays: new Map([...jbPays]),
+  wager: 1,
+  credit: 0,
+  coin: "quarter",
+  showCash: false,
   phase: 0,
   deck: [],
   hand: [...initHand],
@@ -47,6 +55,46 @@ const Reducer = function (state, action) {
         phase: action.payload,
       };
     }
+
+    case "SHOW_CASH": {
+      return {
+        ...state,
+        showCash: !state.showCash,
+      };
+    }
+
+    case "CHOOSE_COIN": {
+      return {
+        ...state,
+        coin: action.payload,
+      };
+    }
+
+    case "BET_UP": {
+      if (state.wager === 5) {
+        return state;
+      }
+      return {
+        ...state,
+        wager: state.wager + 1,
+      };
+    }
+
+    case "BET_DOWN": {
+      if (state.wager === 1) {
+        return state;
+      }
+      return {
+        ...state,
+        wager: state.wager - 1,
+      };
+    }
+
+    case "ADD_CREDIT":
+      return {
+        ...state,
+        credit: state.credit + action.credits,
+      };
 
     default:
       return state;

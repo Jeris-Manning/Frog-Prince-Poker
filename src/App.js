@@ -1,52 +1,32 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer } from "react";
 import styled from "styled-components";
 import Reducer, { initReducer } from "./Reducer";
-import DrawCards from "./Components/DrawCards";
-import DealCards from "./Components/DealCards";
+import CardsDisplay from "./Components/CardsDisplay";
+import DealButton from "./Components/DealButton";
+import PayTable from "./Components/PayTable";
+import CreditControls from "./Components/CreditControls";
+import GameHeader from "./Components/GameHeader.js";
 import "./App.css";
 
 function App() {
   const [state, dispatch] = useReducer(Reducer, initReducer);
-  useEffect(() => {}, []);
+
   return (
-    <DisplayDiv>
-      <h1>Jacks or Better</h1>
-
-      {Number(state.phase) === 1 ? (
-        <DealCards state={state} dispatch={dispatch} />
-      ) : (
-        <DrawCards state={state} dispatch={dispatch} />
-      )}
-
-      {state.phase === 1 ? (
-        <button
-          className="dealDrawBtn"
-          onClick={() => dispatch({ type: "PHASE_CHANGE", payload: 2 })}>
-          Draw
-        </button>
-      ) : (
-        <button
-          className="dealDrawBtn"
-          onClick={() => dispatch({ type: "PHASE_CHANGE", payload: 1 })}>
-          Deal
-        </button>
-      )}
-    </DisplayDiv>
+    <AppContainer>
+      <GameHeader state={state} />
+      <PayTable state={state} />
+      <CardsDisplay state={state} dispatch={dispatch} />
+      <CreditControls state={state} dispatch={dispatch} />
+      <DealButton state={state} dispatch={dispatch} />
+    </AppContainer>
   );
 }
 
 export default App;
 
-const DisplayDiv = styled.div`
-  padding-top: 30px;
+const AppContainer = styled.div`
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  h1 {
-    margin-bottom: 10px;
-  }
-  .dealDrawBtn {
-    margin-top: 50px;
-    width: 150px;
-  }
 `;

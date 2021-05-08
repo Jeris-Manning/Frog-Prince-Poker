@@ -66,7 +66,7 @@ const DealCards = ({ state, dispatch }) => {
 
   return (
     <>
-      <HandDisplay state={state} dispatch={dispatch} />
+      <HandDisplay buttons={true} state={state} dispatch={dispatch} />
     </>
   );
 };

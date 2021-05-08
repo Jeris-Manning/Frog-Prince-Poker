@@ -38,14 +38,20 @@ const DrawCards = ({ state, dispatch }) => {
   }, [state.phase]);
 
   return (
-    <>
-      <HandDisplay state={state} dispatch={dispatch} />
+    <FinalHandDiv>
+      <HandDisplay buttons={false} state={state} dispatch={dispatch} />
       <FinalHand>{finalHand}</FinalHand>
-    </>
+    </FinalHandDiv>
   );
 };
 
 export default DrawCards;
+
+const FinalHandDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const FinalHand = styled.h1`
   text-align: center;
