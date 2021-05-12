@@ -1,17 +1,17 @@
 export const coins = {
   dime: {
+    name: "dime",
     multiplier: 10,
-    payConversion: 0.1,
     display: "10¢",
   },
   quarter: {
+    name: "quarter",
     multiplier: 25,
-    payConversion: 0.25,
     display: "25¢",
   },
   dollar: {
+    name: "dollar",
     multiplier: 100,
-    payConversion: 1,
     display: "$1",
   },
 };

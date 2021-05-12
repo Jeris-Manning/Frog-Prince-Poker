@@ -1,23 +1,25 @@
 import { jbPays } from "./Utility/payouts";
+import { coins } from "./Utility/constants";
 
 const initHand = [
-  { idx: "blank" },
-  { idx: "blank" },
-  { idx: "blank" },
-  { idx: "blank" },
-  { idx: "blank" },
+  { idx: "blank", held: false, showBack: true },
+  { idx: "blank", held: false, showBack: true },
+  { idx: "blank", held: false, showBack: true },
+  { idx: "blank", held: false, showBack: true },
+  { idx: "blank", held: false, showBack: true },
 ];
 
 const initHold = [false, false, false, false, false];
 
 export const initReducer = {
   loadedGame: "Jacks or Better",
-  pays: new Map([...jbPays]),
+  pays: new Map([...jbPays[0]]),
+  payouts: [...jbPays[1]],
   wager: 1,
   credit: 0,
-  coin: "quarter",
+  coin: coins["quarter"],
   showCash: false,
-  phase: 0,
+  phase: "begin",
   deck: [],
   hand: [...initHand],
   held: [...initHold],
@@ -41,11 +43,37 @@ const Reducer = function (state, action) {
         deck: action.payload.deck,
       };
     }
-
-    case "TOGGLE_HOLD": {
+    case "SHOW_DRAWN_HAND": {
+      let currentCards = action.currentHand;
+      for (const card of currentCards) {
+        card.showBack = false;
+      }
+      console.log(currentCards, "THE DISPATCHED");
       return {
         ...state,
-        held: [...action.holdState],
+        hand: [...currentCards],
+      };
+    }
+
+    case "SHOW_DRAWN_CARD": {
+      let currentHand = [...state.hand];
+      let currentCard = action.payload.currentCard;
+      currentCard.showBack = false;
+      currentHand[action.payload.cardIdx] = { ...currentCard };
+
+      // console.log(currentCards, "THE DISPATCHED");
+      return {
+        ...state,
+        hand: [...currentHand],
+      };
+    }
+
+    case "TOGGLE_HOLD": {
+      let newHand = [...state.hand];
+      newHand[action.payload.id].held = action.payload.holdState;
+      return {
+        ...state,
+        hand: [...newHand],
       };
     }
 
@@ -66,7 +94,7 @@ const Reducer = function (state, action) {
     case "CHOOSE_COIN": {
       return {
         ...state,
-        coin: action.payload,
+        coin: coins[action.payload],
       };
     }
 
@@ -94,6 +122,12 @@ const Reducer = function (state, action) {
       return {
         ...state,
         credit: state.credit + action.credits,
+      };
+
+    case "SUB_CREDIT":
+      return {
+        ...state,
+        credit: state.credit - state.coin.multiplier * state.wager,
       };
 
     default:

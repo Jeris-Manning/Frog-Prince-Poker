@@ -1,11 +1,11 @@
 import React, { useReducer } from "react";
 import styled from "styled-components";
 import Reducer, { initReducer } from "./Reducer";
-import CardsDisplay from "./Components/CardsDisplay";
+import CardsDisplay from "./Components/CardsDisplay/CardsDisplay";
 import DealButton from "./Components/DealButton";
-import PayTable from "./Components/PayTable";
-import CreditControls from "./Components/CreditControls";
-import GameHeader from "./Components/GameHeader.js";
+import PayTable from "./Components/PayTable/PayTable";
+import CreditControls from "./Components/CreditControls/CreditControls";
+import GameHeader from "./Components/GameHeader/GameHeader.js";
 import "./App.css";
 
 function App() {

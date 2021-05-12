@@ -50,7 +50,7 @@ import s11 from "./cardImages/j-s.png";
 import s12 from "./cardImages/q-s.png";
 import s13 from "./cardImages/k-s.png";
 import s14 from "./cardImages/a-s.png";
-import back from "./cardImages/blue.png";
+import back from "./cardImages/frog_back.png";
 
 export const Cards = {
   c2: c2,

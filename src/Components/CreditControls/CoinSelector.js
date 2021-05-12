@@ -6,17 +6,17 @@ const CoinSelector = ({ state, dispatch }) => {
       <h1>Coin:</h1>
       <CoinCircle
         onClick={() => dispatch({ type: "CHOOSE_COIN", payload: "dime" })}
-        fill={state.coin === "dime" ? true : false}>
+        fill={state.coin.name === "dime" ? true : false}>
         10¢
       </CoinCircle>
       <CoinCircle
         onClick={() => dispatch({ type: "CHOOSE_COIN", payload: "quarter" })}
-        fill={state.coin === "quarter" ? true : false}>
+        fill={state.coin.name === "quarter" ? true : false}>
         25¢
       </CoinCircle>
       <CoinCircle
         onClick={() => dispatch({ type: "CHOOSE_COIN", payload: "dollar" })}
-        fill={state.coin === "dollar" ? true : false}>
+        fill={state.coin.name === "dollar" ? true : false}>
         $1
       </CoinCircle>
     </ChooseCoinDiv>
@@ -44,4 +44,5 @@ const CoinCircle = styled.div`
   font-size: 1.7rem;
   font-weight: 700;
   background-color: ${(props) => (props.fill ? "palegreen" : "red")};
+  cursor: pointer;
 `;

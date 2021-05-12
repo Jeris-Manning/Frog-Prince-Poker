@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import HandDisplay from "./HandDisplay";
 
-const DealCards = ({ state, dispatch }) => {
+const AfterDeal = ({ state, dispatch }) => {
   const freshDeck = () => {
     const freshDeck = [];
     const suits = ["c", "d", "h", "s"];
@@ -50,25 +50,34 @@ const DealCards = ({ state, dispatch }) => {
 
     for (let i = 0; i < 5; i++) {
       let topCard = readyDeck.pop();
-      dealtHand[i] = { ...topCard, held: false };
+      dealtHand[i] = { ...topCard, held: false, showBack: true };
     }
     return [dealtHand, readyDeck];
   };
 
   useEffect(() => {
-    if (state.phase === 1) {
+    if (state.phase === "firstDeal") {
+      dispatch({ type: "PHASE_CHANGE", payload: "afterDeal" });
+    }
+    if (state.phase === "afterDeal") {
       let mixedDeck = shuffleDeck(freshDeck());
       let postDeal = dealHand(mixedDeck);
       let afterDeal = { hand: postDeal[0], deck: postDeal[1] };
       dispatch({ type: "DEAL_HAND", afterDeal });
+
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          let currentCard = postDeal[0][i];
+          dispatch({
+            type: "SHOW_DRAWN_CARD",
+            payload: { currentCard: currentCard, cardIdx: i },
+          });
+        }, i * 70 + 100);
+      }
     }
   }, [state.phase, dispatch]);
 
-  return (
-    <>
-      <HandDisplay buttons={true} state={state} dispatch={dispatch} />
-    </>
-  );
+  return <HandDisplay afterDeal={true} state={state} dispatch={dispatch} />;
 };
 
-export default DealCards;
+export default AfterDeal;

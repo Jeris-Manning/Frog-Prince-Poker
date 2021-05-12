@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { toCash, coins } from "../Utility/constants";
+import { toCash } from "../../Utility/constants";
 
 const PayTable = ({ state }) => {
   let payArray = [];
@@ -8,7 +8,6 @@ const PayTable = ({ state }) => {
   let replacer = /_/g;
   for (const pokerHand of pay) {
     pokerHand[0] = pokerHand[0].replace(replacer, " ");
-
     payArray.push(pokerHand);
   }
   let coinCount = state.wager;
@@ -19,27 +18,27 @@ const PayTable = ({ state }) => {
           <h3 className="handName">{hand[0]}</h3>
           <h3 className={coinCount === 1 ? "highlight" : ""}>
             {state.showCash
-              ? toCash(hand[1] * coins[state.coin]["payConversion"])
+              ? toCash(hand[1] * state.coin["payConversion"])
               : hand[1]}
           </h3>
           <h3 className={coinCount === 2 ? "highlight" : ""}>
             {state.showCash
-              ? toCash(hand[1] * coins[state.coin]["payConversion"] * 2)
+              ? toCash(hand[1] * state.coin["payConversion"] * 2)
               : hand[1] * 2}
           </h3>
           <h3 className={coinCount === 3 ? "highlight" : ""}>
             {state.showCash
-              ? toCash(hand[1] * coins[state.coin]["payConversion"] * 3)
+              ? toCash(hand[1] * state.coin["payConversion"] * 3)
               : hand[1] * 3}
           </h3>
           <h3 className={coinCount === 4 ? "highlight" : ""}>
             {state.showCash
-              ? toCash(hand[1] * coins[state.coin]["payConversion"] * 4)
+              ? toCash(hand[1] * state.coin["payConversion"] * 4)
               : hand[1] * 4}
           </h3>
           <h3 className={coinCount === 5 ? "highlight" : ""}>
             {state.showCash
-              ? toCash(hand[1] * coins[state.coin]["payConversion"] * 5)
+              ? toCash(hand[1] * state.coin["payConversion"] * 5)
               : hand[1] * 5}
           </h3>
         </>

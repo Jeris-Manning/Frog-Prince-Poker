@@ -1,15 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import DealCards from "./DealCards";
-import DrawCards from "./DrawCards";
+import AfterDeal from "./AfterDeal";
+import AfterDraw from "./AfterDraw";
 
 const CardsDisplay = ({ state, dispatch }) => {
+
+
   return (
     <CardsDisplayDiv>
-      {Number(state.phase) === 1 ? (
-        <DealCards state={state} dispatch={dispatch} />
+      {state.phase !== 'afterDraw' ? (
+        <AfterDeal state={state} dispatch={dispatch} />
       ) : (
-        <DrawCards state={state} dispatch={dispatch} />
+        <AfterDraw state={state} dispatch={dispatch} />
       )}
     </CardsDisplayDiv>
   );
